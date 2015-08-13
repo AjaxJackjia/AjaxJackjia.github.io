@@ -27,7 +27,7 @@ date: 2015-03-22 16:52:53
 
 # 科研情况</h3>
 
-* 第一作者，发明专利, 一种基于在线GPS数据的出租车异常轨迹实时检测方法，申请号：201510148076.3，申请日期：2014年3月
+* 第一作者，发明专利, 一种基于在线GPS数据的出租车异常轨迹实时检测方法，申请号：201510148076.3，申请日期：2015年3月
 
 * 第一作者, HelpMe: A Heuristic License Plate Correction Method for Big Data Application, Springer CCIS series, 2014, EI Index, 已录用
 
