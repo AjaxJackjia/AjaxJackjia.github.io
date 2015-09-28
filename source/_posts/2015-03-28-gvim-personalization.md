@@ -12,9 +12,12 @@ tags:
 
 <pre><code class="language-bash">
 if has("gui_running")
+  set nobackup
   set guifont=YaHei_Consolas_Hybrid:h12
-  colo desert
   set nu
+  set ts=4
+  set expandtab
+  colo desert
   set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
   set fileencoding=utf-8
 endif
