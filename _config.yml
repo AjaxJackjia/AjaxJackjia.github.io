@@ -1,14 +1,14 @@
 # Hexo Configuration
-## Docs: http://hexo.io/docs/configuration.html
+## Docs: https://hexo.io/docs/configuration.html
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Jack Jia  
-subtitle: 贾国超的博客
+title: Jack Jia
+subtitle: 慵懒的探索者
 description: 自由·至简·宁静
 author: Jack Jia
-email:
-language: zh-CN 
+language: zh-Hans
+timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -23,38 +23,30 @@ public_dir: public
 tag_dir: tags
 archive_dir: archives
 category_dir: categories
+code_dir: downloads/code
+i18n_dir: :lang
+skip_render:
 
 # Writing
 new_post_name: :year-:month-:day-:title.md # File name of new posts
 default_layout: post
-auto_spacing: false # Add spaces between asian characters and western characters
 titlecase: false # Transform title into titlecase
 external_link: true # Open external links in new tab
-max_open_file: 100
-multi_thread: true
 filename_case: 0
 render_drafts: false
-post_asset_folder: true
+post_asset_folder: false
+relative_link: false
+future: true
 highlight:
   enable: true
   line_number: true
+  auto_detect: false
   tab_replace:
 
 # Category & Tag
 default_category: uncategorized
 category_map:
 tag_map:
-
-# Archives 默认值为2，这里都修改为1，相应页面就只会列出标题，而非全文
-## 2: Enable pagination
-## 1: Disable pagination
-## 0: Fully Disable
-archive: 1
-category: 1
-tag: 1
-
-archive_generator:
-  per_page: 0
 
 # Date / Time format
 ## Hexo uses Moment.js to parse and display date
@@ -69,31 +61,12 @@ per_page: 10
 pagination_dir: page
 
 # Extensions
-## Plugins: http://hexo.io/plugins/
-## Themes: http://hexo.io/themes/
-theme: jacman 
-stylus:
-  compress: true
-
-exclude_generator:
-plugins:
-- hexo-generator-feed
-- hexo-generator-sitemap
-- hexo-git-backup
-
-feed:
-  type: atom
-  path: atom.xml
-  limit: 20
-
-# Backup
-backup:
-	type: git
-	repository:
-	   github: git@github.com:AjaxJackjia/AjaxJackjia.github.io.git,blog-source
+## Plugins: https://hexo.io/plugins/
+## Themes: https://hexo.io/themes/
+theme: next
 
 # Deployment
-## Docs: http://hexo.io/docs/deployment.html
+## Docs: https://hexo.io/docs/deployment.html
 deploy: 
   type: git
   repo: https://github.com/AjaxJackjia/AjaxJackjia.github.io.git
