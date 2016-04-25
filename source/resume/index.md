@@ -1,5 +1,6 @@
 title: "Resume"
 date: 2015-03-22 16:52:53
+comments: false
 ---
 # 个人信息
 
@@ -9,7 +10,7 @@ date: 2015-03-22 16:52:53
 
 * 本科： 中南大学 - 软件工程
 
-* 手机：17093461621(深圳)/15751866291(南京)
+* 手机：15751866291(南京)
 
 * 邮箱：nju_jackjia@163.com
 
@@ -29,11 +30,11 @@ date: 2015-03-22 16:52:53
 
 * 第一作者，发明专利, 一种基于在线GPS数据的出租车异常轨迹实时检测方法，申请号：201510148076.3，申请日期：2015年3月
 
-* 第一作者, HelpMe: A Heuristic License Plate Correction Method for Big Data Application, Springer CCIS series, 2014, EI Index, 已录用
+* 第一作者, HelpMe: A Heuristic License Plate Correction Method for Big Data Application, Springer CCIS series, 2014, EI Index.
 
-* 第二作者, A Method of Real-time Trajectory Monitoring to Improve Taxi Service Using GPS Big Data, 2015, SCI Index, Information & Management (Journal), Under Review
+* 第二作者, A Stop Planning Method over big traffice data for Airport Shuttle Bus, IEEE Conference Proceedings, 2014, EI Index.
 
-* 第二作者, A Stop Planning Method over big traffice data for Airport Shuttle Bus, IEEE Conference Proceedings, 2014, EI Index, 已录用
+* 第三作者, A Method for Real-time Trajectory Monitoring to Improve Taxi Service Using GPS Big Data, 2015, SCI Index, Information & Management (Journal), in press.
 					
 
 # 实习经历
