@@ -1,7 +1,7 @@
 title: "GitHub使用初探"
 date: 2015-03-09 17:09:23
 category: 
-- Git
+- 版本控制 
 tags:
 - git
 ---
