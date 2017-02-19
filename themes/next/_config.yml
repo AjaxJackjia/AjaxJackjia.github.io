@@ -29,6 +29,7 @@ menu:
   archives: /archives
   categories: /categories
   tags: /tags
+  books: /books
   about: /about
   #commonweal: /404.html
 
@@ -43,6 +44,7 @@ menu_icons:
   #KeyMapsToMenuItemKey: NameOfTheIconFromFontAwesome
   home: home
   about: user
+  books: book
   categories: th
   tags: tags
   archives: archive
