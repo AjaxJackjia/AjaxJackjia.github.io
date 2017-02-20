@@ -11,6 +11,14 @@ BOOKS_OF_READING = [
 		'start_time': '',
 		'end_time': '',
 	},
+    {
+		'name': '黑客与画家',
+		'photo': '/uploads/books/hackers-and-painters.jpg',
+		'link': 'https://book.douban.com/subject/6021440/',
+		'desc': '',
+		'start_time': '',
+		'end_time': '',
+	},
 ];
 
 BOOKS_OF_READ = [
