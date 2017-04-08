@@ -1,0 +1,863 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="TCP/IP,network,协议,网络," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="TCP/IP体系结构之TCP和UDP协议 1. 概述 为了改善网际层数据报交付不可靠的情况，一种方法是对接收的数据报进行确认。但是IP层不提供这种支持，因为有些应用不需要。 运输层提供针对不同需求的服务：较高成本的面向连接的可靠运输服务及较简单的和更快速的不可靠运输服务。  运输控制协议(TCP)：是一个功能完备的运输协议，它面向连接，具有流控制、运输确认和重传机制。用户数据报协议(UDP)：是一">
+<meta name="keywords" content="TCP/IP,network,协议,网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TCP/IP基础知识(2)">
+<meta property="og:url" content="http://yoursite.com/TCP-IP-basics-2/index.html">
+<meta property="og:site_name" content="Jack Jia">
+<meta property="og:description" content="TCP/IP体系结构之TCP和UDP协议 1. 概述 为了改善网际层数据报交付不可靠的情况，一种方法是对接收的数据报进行确认。但是IP层不提供这种支持，因为有些应用不需要。 运输层提供针对不同需求的服务：较高成本的面向连接的可靠运输服务及较简单的和更快速的不可靠运输服务。  运输控制协议(TCP)：是一个功能完备的运输协议，它面向连接，具有流控制、运输确认和重传机制。用户数据报协议(UDP)：是一">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_分层复用.png">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_端口应用.png">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_知名端口.png">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_套接字模型.png">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_udp报文格式.png">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_udp应用.png">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_tcp报文段格式.png">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_tcp报文段首部选项.png">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_常用TCP选项.png">
+<meta property="og:updated_time" content="2017-04-08T07:37:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TCP/IP基础知识(2)">
+<meta name="twitter:description" content="TCP/IP体系结构之TCP和UDP协议 1. 概述 为了改善网际层数据报交付不可靠的情况，一种方法是对接收的数据报进行确认。但是IP层不提供这种支持，因为有些应用不需要。 运输层提供针对不同需求的服务：较高成本的面向连接的可靠运输服务及较简单的和更快速的不可靠运输服务。  运输控制协议(TCP)：是一个功能完备的运输协议，它面向连接，具有流控制、运输确认和重传机制。用户数据报协议(UDP)：是一">
+<meta name="twitter:image" content="http://yoursite.com/uploads/2015/3/tcpip_分层复用.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> TCP/IP基础知识(2) | Jack Jia </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5e5d756ee86b47c3c2339a80b083f4a6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Jack Jia</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">慵懒的探索者</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books" rel="section">
+            
+              <i class="menu-item-icon fa fa-book fa-fw"></i> <br />
+            
+            读书
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                TCP/IP基础知识(2)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-03-28T12:05:19+08:00" content="2015-03-28">
+              2015-03-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/网络/" itemprop="url" rel="index">
+                    <span itemprop="name">网络</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/TCP-IP-basics-2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="TCP-IP-basics-2/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/TCP-IP-basics-2/" class="leancloud_visitors" data-flag-title="TCP/IP基础知识(2)">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="TCP-IP体系结构之TCP和UDP协议"><a href="#TCP-IP体系结构之TCP和UDP协议" class="headerlink" title="TCP/IP体系结构之TCP和UDP协议"></a>TCP/IP体系结构之TCP和UDP协议</h1><hr>
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><ul>
+<li>为了改善网际层数据报交付不可靠的情况，一种方法是对接收的数据报进行确认。但是IP层不提供这种支持，因为有些应用不需要。</li>
+<li>运输层提供针对不同需求的服务：较高成本的面向连接的可靠运输服务及较简单的和更快速的不可靠运输服务。</li>
+</ul>
+<p><strong>运输控制协议</strong>(<strong>TCP</strong>)：是一个功能完备的运输协议，它面向连接，具有流控制、运输确认和重传机制。<br><strong>用户数据报协议</strong>(<strong>UDP</strong>)：是一个简单、高效和快速的运输协议，但它是不可靠的。</p>
+<hr>
+<h2 id="2-端口"><a href="#2-端口" class="headerlink" title="2. 端口"></a>2. 端口</h2><p>通常一个设备上运行不止一个应用，设备的IP地址为这些应用所共享。发送数据报的每个应用都具有相同的IP源地址，接收到的每个数据报都有相同的目的IP地址。为了使多个应用能使用TCP/IP栈，应用数据被运输层以复用和分用的方式进行运输。</p>
+<p><a class="cotent-img" href="/uploads/2015/3/tcpip_分层复用.png"><br>    <img src="/uploads/2015/3/tcpip_分层复用.png" alt="tcpip_分层复用" width="680"><br></a></p>
+<h3 id="端口地址"><a href="#端口地址" class="headerlink" title="端口地址"></a>端口地址</h3><p>为了区分某些应用，运输层为每个进程分配不同的端口。从应用接收的数据被运输层封装，在此加入源和目的端口。在接收端，网际层接收数据报，并将数据传递给运输层，运输层使用目的端口将报文传递给正确的应用。</p>
+<ul>
+<li>运输层的UDP和TCP协议为应用提供服务，端口地址16位，所以每种协议有65536个端口可用。</li>
+<li>应用协议使用客户/服务器模型。启动通信的客户程序需要知道服务器应用程序的目的端口。服务器使用接收到的报文中的源端口获知客户端口。</li>
+</ul>
+<p><a class="cotent-img" href="/uploads/2015/3/tcpip_端口应用.png"><br>    <img src="/uploads/2015/3/tcpip_端口应用.png" alt="tcpip_端口应用" width="680"><br></a></p>
+<p>TCP和UDP端口号分配可分成3个范围：</p>
+<ul>
+<li>知名端口号(0~1023)：保留给通用的TCP/IP应用；</li>
+<li>注册端口号(1024~49151)：其它应用可以注册使用的端口号；</li>
+<li>动态/私有端口号(49152~65535)：不被管理，可以用于任何目的，可以被任何机构使用。</li>
+</ul>
+<p>完全的端口号分配表由IANA维护，可以在<a href="http://www.iana.org/assignments/port-numbers" target="_blank" rel="external">[该网站]</a>查询到。</p>
+<p>下图列举了常用的知名端口：<br><a class="cotent-img" href="/uploads/2015/3/tcpip_知名端口.png"><br>    <img src="/uploads/2015/3/tcpip_知名端口.png" alt="tcpip_知名端口" width="680"><br></a></p>
+<h3 id="TCP-IP套接字"><a href="#TCP-IP套接字" class="headerlink" title="TCP/IP套接字"></a>TCP/IP套接字</h3><ul>
+<li>套接字是一个通信端标识符，由IP地址和端口号决定；</li>
+<li>套接字与TCP/IP应用程序接口(API)相关联，每个API功能都需要一个套接字作为标识符；</li>
+<li>有两种类型的套接字：<strong>流</strong>（TCP）和<strong>数据报</strong>（UDP）；</li>
+<li>两个设备之间交换数据可以描述为报文从某一设备上的套接字发送到另一设备上的套接字。两个套接字建立关联，标注为<br>$$ <200.136.112.75:2520,205.122.63.20:80> $$</200.136.112.75:2520,205.122.63.20:80></li>
+<li>可以建立多个套接字，以允许几个应用共享同一个设备的IP地址。另外，在一个设备上可以存在多个关联，即一个设备可以同时与其它设备有多个连接。<br><a class="cotent-img" href="/uploads/2015/3/tcpip_套接字模型.png"><br>  <img src="/uploads/2015/3/tcpip_套接字模型.png" alt="tcpip_套接字模型" width="640"><br></a></li>
+</ul>
+<hr>
+<h2 id="3-用户数据报协议（UDP）"><a href="#3-用户数据报协议（UDP）" class="headerlink" title="3. 用户数据报协议（UDP）"></a>3. 用户数据报协议（UDP）</h2><p>用户数据报协议(UDP)是为那些需要一种简单且快速的运输协议的应用而设计的。对这些应用来说，甚至可以不保证报文的交付和重复，或者重传也没有意义。</p>
+<p>UDP只实现端口导址。提供了一个可选的效验和用于错误检测。其它工作都由网际协议完成。<br><a class="cotent-img" href="/uploads/2015/3/tcpip_udp报文格式.png"><br>    <img src="/uploads/2015/3/tcpip_udp报文格式.png" alt="tcpip_udp报文格式" width="680"><br></a></p>
+<h3 id="UDP报文格式说明"><a href="#UDP报文格式说明" class="headerlink" title="UDP报文格式说明"></a>UDP报文格式说明</h3><ul>
+<li><strong>源端口(2字节)</strong>：发送报文的应用进程的16位端口号。</li>
+<li><strong>目的端口(2字节)</strong>：目的设备上的接收进程的16位端口号。</li>
+<li><strong>长度(2字节)</strong>：整个UDP数据报的长度，包括首部和数据字段。</li>
+<li><strong>校验和(2字节)</strong>：提供错误检测功能的16位校验和，可选项。</li>
+<li><strong>数据(可变长度)</strong>：要发送的已封装应用报文。</li>
+</ul>
+<h3 id="基于UDP的应用"><a href="#基于UDP的应用" class="headerlink" title="基于UDP的应用"></a>基于UDP的应用</h3><ul>
+<li>请求-应答应用</li>
+<li>数据流应用</li>
+</ul>
+<p><a class="cotent-img" href="/uploads/2015/3/tcpip_udp应用.png"><br>    <img src="/uploads/2015/3/tcpip_udp应用.png" alt="tcpip_udp应用" width="680"><br></a></p>
+<hr>
+<h2 id="4-运输控制协议（TCP）"><a href="#4-运输控制协议（TCP）" class="headerlink" title="4. 运输控制协议（TCP）"></a>4. 运输控制协议（TCP）</h2><p>运输控制协议(TCP)是一种功能完备的面向连接的运输协议，具有流控制、运输确认和重传机制。</p>
+<h3 id="TCP特点"><a href="#TCP特点" class="headerlink" title="TCP特点"></a>TCP特点</h3><ul>
+<li><strong>面向连接</strong>: 在设备之间发生数据传送之前，必须先建立一个连接。</li>
+<li><strong>多连接</strong>: 允许一个设备有多个连接打开而不会产生冲突。</li>
+<li><strong>全双工</strong>: 一旦建立了连接，数据可以在两个方向传送。</li>
+<li><strong>面向流</strong>: 允许应用已连续字节流的方式发送数据，TCP必须将数据打包成块后再将其交给IP。</li>
+<li><strong>非结构化数据</strong>: 将以字节流的形式传送的数据分割成原始的数据报。</li>
+<li><strong>可靠</strong>: TCP保证所有发送的数据都能到达其目的地。</li>
+<li><strong>确认</strong>: TCP发送的每个报文都需要被接收方确认。</li>
+<li><strong>流控制</strong>: 当某设备以某个数率发送数据而接收设备来不及处理时，TCP提供一种机制，使接收设备能通知发送设备降低发送数率或停止发送。</li>
+<li><strong>进程编址</strong>: 对于共享同一个IP地址的不同应用，TCP提供了一种标识每个应用和以复用方式将数据传给IP层的方法。在接收端，TCP以分用的方式将数据传给目的应用。这一编址机制由端口号来实现。</li>
+</ul>
+<h3 id="TCP报文单元"><a href="#TCP报文单元" class="headerlink" title="TCP报文单元"></a>TCP报文单元</h3><ul>
+<li>TCP提供字节流传送数据的方式，应用不需要关心如何打包数据才能将其传送给运输层。</li>
+<li>虽然TCP是面向流的，但其下面的IP层却不是，所以TCP必须将接收到的流分割成合适的数据块，这些数据块被封装成“报文段”。</li>
+<li>TCP以流的形式接受来自应用层的数据，这一现实的直接含义是：使用TCP的应用所接收的数据是非结构化的。</li>
+</ul>
+<p><a class="cotent-img" href="/uploads/2015/3/tcpip_tcp报文段格式.png"><br>    <img src="/uploads/2015/3/tcpip_tcp报文段格式.png" alt="tcpip_tcp报文段格式" width="680"><br></a></p>
+<h3 id="TCP报文格式说明"><a href="#TCP报文格式说明" class="headerlink" title="TCP报文格式说明"></a>TCP报文格式说明</h3><ul>
+<li><strong>源端口</strong>（2字节）：源设备上发送报文段的进程的16位端口号。一般来说，对于请求报文它是一个客户进程，对于应答报文它是一个服务器进程。</li>
+<li><strong>目的端口</strong>（2字节）：目的设备上接收进程的16位端口号。一般来说，对于请求报文它是一个服务器进程，对于应答报文它是一个客户进程。</li>
+<li><strong>序号</strong>（4字节）：由滑动窗口确认系统使用，作为报文段中的一个字节的序号。在SYN位置1的情况下（连接请求报文），它指示初始序号（ISN）。</li>
+<li><strong>确认号</strong>（4字节）：若ACK位置1，该字段有效并包含设备用于对接收到的数据进行确认的确认号。</li>
+<li><strong>数据偏移</strong>（4字节）：指示数据的开始位置与TCP报文段的开始处有多少个32位字的偏移量。</li>
+<li><strong>保留</strong>（6位）：填充0。</li>
+<li><strong>控制位</strong>（6位）：用于控制信息。<ul>
+<li><strong>URG</strong>（紧急位，1位）：若置1，表示该报文段包含紧急数据，由紧急指针字段指示其位置。</li>
+<li><strong>ACK</strong>（确认位，1位）：若置1，表示该报文段是一个确认报文，并且确认号字段有效。</li>
+<li><strong>PSH</strong>（推送位，1位）：若置1，表示该报文段中的数据必须被立即发送并被推送给接收设备上的应用。否则，该数据将要等到更多的数据传给TCP，达到报文段长度后才被发送。</li>
+<li><strong>RST</strong>（复位位，1位）：若置1，表示发送者检测到一个问题并希望对连接进行复位。</li>
+<li><strong>SYN</strong>（同步位，1位）：若置1，表示该报文段请求对序号同步并建立一个连接。序号字段包含发送者用于该连接的初始序号（ISN）。</li>
+<li><strong>FIN</strong>（结束位，1位）：若置1，表示该报文段的发送者请求关闭连接。</li>
+</ul>
+</li>
+<li><strong>窗口</strong>（2字节）：用于流控制，指示该报文段的发送者在给定时间内能从其他设备接收的字节数。</li>
+<li><strong>校验和</strong>（2字节）：16位校验和。</li>
+<li><strong>紧急指针</strong>（2字节）：若URG位置1，该字段包含紧急数据后面的“正常”数据第一个字节的序号。</li>
+<li><strong>选项</strong>（可变长度）：一组选择项。</li>
+<li><strong>填充</strong>（可变长度）：若选项字段的长度不是32位的整数倍，则要用足够的0来填充首部。</li>
+<li><strong>数据</strong>（可变长度）：报文段中要发送的数据字节。</li>
+</ul>
+<h3 id="报文段首部选项"><a href="#报文段首部选项" class="headerlink" title="报文段首部选项"></a>报文段首部选项</h3><ul>
+<li>选项类型(1字节)-指定选项的类型；</li>
+<li>选项长度(1字节)-以字节为单位的整个选项的长度；</li>
+<li>选项数据(可变长度)-选项中使用的数据。</li>
+</ul>
+<p>选项字段有两种可能的格式：</p>
+<p><a class="cotent-img" href="/uploads/2015/3/tcpip_tcp报文段首部选项.png"><br>    <img src="/uploads/2015/3/tcpip_tcp报文段首部选项.png" alt="tcpip_tcp报文段首部选项" width="680"><br></a></p>
+<h3 id="常用的TCP选项"><a href="#常用的TCP选项" class="headerlink" title="常用的TCP选项"></a>常用的TCP选项</h3><p><a class="cotent-img" href="/uploads/2015/3/tcpip_常用TCP选项.png"><br>    <img src="/uploads/2015/3/tcpip_常用TCP选项.png" alt="tcpip_常用TCP选项" width="680"><br></a></p>
+<h3 id="PUSH功能"><a href="#PUSH功能" class="headerlink" title="PUSH功能"></a>PUSH功能</h3><p>数据从应用传到TCP层时，首先被缓存，然后构建长度适宜的报文段，并将其发送到IP层，报文段长度必须足够大。如果传输的数据很少，构不成合适的报文段，则数据一直要保存在缓冲区中。在有些应用中，，这种做法会产生负面影响。</p>
+<p>为解决这一问题，应用传递的数据需要立即发送时，启用“PUSH”功能。TCP构建一个报文段，将其PSH控制位置1并发送出去。接收端收到报文并看到PSH位激活时，必须无延迟的将数据传给应用。</p>
+<h3 id="URGENT功能"><a href="#URGENT功能" class="headerlink" title="URGENT功能"></a>URGENT功能</h3><p>所有数据在重要性方面被平等对待，但有些情况下，某些重要紧急的信息必须在不等待其对应次序的情况下发送给接受者。</p>
+<p>当一个应用调用“URGENT”功能时，TCP会构建一个能将其立即发送出去的报文段。该报文段中的URG控制位被置1。该报文段也可以与正常数据合在一起，由TCP首部紧急指针字段指示紧急数据的结束。</p>
+<hr>
+<p>–EOF–</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/TCP-IP/" rel="tag">#TCP/IP</a>
+          
+            <a href="/tags/network/" rel="tag">#network</a>
+          
+            <a href="/tags/协议/" rel="tag">#协议</a>
+          
+            <a href="/tags/网络/" rel="tag">#网络</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/TCP-IP-basics-3/" rel="next" title="TCP/IP基础知识(3)">
+                <i class="fa fa-chevron-left"></i> TCP/IP基础知识(3)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/TCP-IP-basics-1/" rel="prev" title="TCP/IP基础知识(1)">
+                TCP/IP基础知识(1) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="TCP-IP-basics-2/"
+           data-title="TCP/IP基础知识(2)" data-url="http://yoursite.com/TCP-IP-basics-2/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="Jack Jia" />
+          <p class="site-author-name" itemprop="name">Jack Jia</p>
+          <p class="site-description motion-element" itemprop="description">自由·至简·宁静</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/AjaxJackjia" target="_blank">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP-IP体系结构之TCP和UDP协议"><span class="nav-number">1.</span> <span class="nav-text">TCP/IP体系结构之TCP和UDP协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-概述"><span class="nav-number">1.1.</span> <span class="nav-text">1. 概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-端口"><span class="nav-number">1.2.</span> <span class="nav-text">2. 端口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#端口地址"><span class="nav-number">1.2.1.</span> <span class="nav-text">端口地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-IP套接字"><span class="nav-number">1.2.2.</span> <span class="nav-text">TCP/IP套接字</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-用户数据报协议（UDP）"><span class="nav-number">1.3.</span> <span class="nav-text">3. 用户数据报协议（UDP）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UDP报文格式说明"><span class="nav-number">1.3.1.</span> <span class="nav-text">UDP报文格式说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于UDP的应用"><span class="nav-number">1.3.2.</span> <span class="nav-text">基于UDP的应用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-运输控制协议（TCP）"><span class="nav-number">1.4.</span> <span class="nav-text">4. 运输控制协议（TCP）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP特点"><span class="nav-number">1.4.1.</span> <span class="nav-text">TCP特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP报文单元"><span class="nav-number">1.4.2.</span> <span class="nav-text">TCP报文单元</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP报文格式说明"><span class="nav-number">1.4.3.</span> <span class="nav-text">TCP报文格式说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#报文段首部选项"><span class="nav-number">1.4.4.</span> <span class="nav-text">报文段首部选项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用的TCP选项"><span class="nav-number">1.4.5.</span> <span class="nav-text">常用的TCP选项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PUSH功能"><span class="nav-number">1.4.6.</span> <span class="nav-text">PUSH功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#URGENT功能"><span class="nav-number">1.4.7.</span> <span class="nav-text">URGENT功能</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jack Jia</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ajaxjackjia"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+
+  
+    <script type="text/javascript" src="http://cdn.staticfile.org/mathjax/2.4.0/MathJax.js"></script>
+    <script type="text/javascript" src="http://cdn.staticfile.org/mathjax/2.4.0/config/TeX-AMS-MML_HTMLorMML.js"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("RpOyfsG0ugnDV6Fg5qbCXNOI-gzGzoHsz", "qa8bUqCM3LW1988c8GgO5XR4");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

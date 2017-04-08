@@ -1,0 +1,788 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Git," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="之前申请了GitHub账号，一直都没怎么利用起来。现在开始好好整一下博客，顺便把git的相关知识学一下。">
+<meta name="keywords" content="Git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GitHub使用初探">
+<meta property="og:url" content="http://yoursite.com/GitHub-basic-usage/index.html">
+<meta property="og:site_name" content="Jack Jia">
+<meta property="og:description" content="之前申请了GitHub账号，一直都没怎么利用起来。现在开始好好整一下博客，顺便把git的相关知识学一下。">
+<meta property="og:updated_time" content="2017-04-08T07:37:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GitHub使用初探">
+<meta name="twitter:description" content="之前申请了GitHub账号，一直都没怎么利用起来。现在开始好好整一下博客，顺便把git的相关知识学一下。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> GitHub使用初探 | Jack Jia </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5e5d756ee86b47c3c2339a80b083f4a6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Jack Jia</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">慵懒的探索者</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books" rel="section">
+            
+              <i class="menu-item-icon fa fa-book fa-fw"></i> <br />
+            
+            读书
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                GitHub使用初探
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-03-09T17:09:23+08:00" content="2015-03-09">
+              2015-03-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/版本控制/" itemprop="url" rel="index">
+                    <span itemprop="name">版本控制</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/GitHub-basic-usage/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="GitHub-basic-usage/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/GitHub-basic-usage/" class="leancloud_visitors" data-flag-title="GitHub使用初探">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>之前申请了GitHub账号，一直都没怎么利用起来。现在开始好好整一下博客，顺便把git的相关知识学一下。</p>
+<a id="more"></a>
+<p>下面说一下如何在GitHub上管理代码：</p>
+<h2 id="1-注册账户以及创建仓库；"><a href="#1-注册账户以及创建仓库；" class="headerlink" title="1. 注册账户以及创建仓库；"></a>1. 注册账户以及创建仓库；</h2><h2 id="2-安装GitBash"><a href="#2-安装GitBash" class="headerlink" title="2. 安装GitBash"></a>2. 安装GitBash</h2><p>这个主要是用来管理git项目的，个人比较习惯里面的命令行窗口。</p>
+<h2 id="3-配置Git"><a href="#3-配置Git" class="headerlink" title="3. 配置Git"></a>3. 配置Git</h2><p>Git是分布式的代码管理工具，远程的代码管理是基于SSH的，所以要使用远程的Git则需要SSH的配置。</p>
+<h3 id="3-1-设置Git的user-name和email；"><a href="#3-1-设置Git的user-name和email；" class="headerlink" title="3.1 设置Git的user name和email；"></a>3.1 设置Git的user name和email；</h3><pre><code class="language-git">
+$ git config --global user.name "XXXX"
+$ git config --global user.email "XXXX"
+</code></pre>
+
+<h3 id="3-2-进入到-，查看是否有-ssh目录，有则备份；"><a href="#3-2-进入到-，查看是否有-ssh目录，有则备份；" class="headerlink" title="3.2 进入到~，查看是否有.ssh目录，有则备份；"></a>3.2 进入到~，查看是否有.ssh目录，有则备份；</h3><h3 id="3-3-在本地创建ssh-key，一路回车，最后得到两个文件：id-rsa和id-rsa-pub；"><a href="#3-3-在本地创建ssh-key，一路回车，最后得到两个文件：id-rsa和id-rsa-pub；" class="headerlink" title="3.3 在本地创建ssh key，一路回车，最后得到两个文件：id_rsa和id_rsa.pub；"></a>3.3 在本地创建ssh key，一路回车，最后得到两个文件：id_rsa和id_rsa.pub；</h3><pre><code class="language-git">
+$ ssh-keygen -t rsa -C "your_email@youremail.com"
+</code></pre>
+
+<h3 id="3-4-进入到github的account-settings，在SSH-Keys选项中，加入id-rsa-pub文件中的key。"><a href="#3-4-进入到github的account-settings，在SSH-Keys选项中，加入id-rsa-pub文件中的key。" class="headerlink" title="3.4 进入到github的account settings，在SSH Keys选项中，加入id_rsa.pub文件中的key。"></a>3.4 进入到github的account settings，在SSH Keys选项中，加入id_rsa.pub文件中的key。</h3><p>为了验证成功，在git bash输入如下命令；</p>
+<pre><code class="language-git">
+$ ssh -T git@github.com
+</code></pre>
+
+<p>如果是第一次的会提示是否continue，输入yes就会看到：You’ve successfully authenticated, but GitHub does not provide shell access 。这就表示已成功连上github。</p>
+<h3 id="3-5-进入到需要上传的repo（如果没有则用git-init来创建），然后添加远程地址："><a href="#3-5-进入到需要上传的repo（如果没有则用git-init来创建），然后添加远程地址：" class="headerlink" title="3.5 进入到需要上传的repo（如果没有则用git init来创建），然后添加远程地址："></a>3.5 进入到需要上传的repo（如果没有则用git init来创建），然后添加远程地址：</h3><pre><code class="language-git">
+$ git remote add origin git@github.com:yourName/yourRepo.git
+</code></pre>
+
+<p>后面的yourName和yourRepo表示你在github的用户名和在github上新建的仓库，加完之后进入.git，打开config，这里会多出一个remote “origin”内容，这就是刚才添加的远程地址，也可以直接修改config来配置远程地址。</p>
+<h2 id="4、提交、上传"><a href="#4、提交、上传" class="headerlink" title="4、提交、上传"></a>4、提交、上传</h2><pre><code class="language-git">
+$ git pull origin master    //同步本地与git服务器
+$ git add README            //添加README到工作区
+$ git commit                //提交到本地版本库
+$ git push origin master    //将本地版本库推送到git服务器
+</code></pre>
+
+<h2 id="5、-gitignore文件"><a href="#5、-gitignore文件" class="headerlink" title="5、.gitignore文件"></a>5、.gitignore文件</h2><p>.gitignore顾名思义就是告诉git需要忽略的文件，这是一个很重要并且很实用的文件。一般我们写完代码后会执行编译、调试等操作，这期间会产生很多中间文件和可执行文件，这些都不是代码文件，是不需要git来管理的。我们在git status的时候会看到很多这样的文件，如果用git add -A来添加的话会把他们都加进去，而手动一个个添加的话也太麻烦了。这时我们就需要.gitignore了。例如为了让Git忽略bin文件夹，在主目录下放置.gitignore文件，其中内容为bin。</p>
+<pre><code class="language-git">
+#忽略的特定文件以及文件夹
+bin
+.project
+</code></pre>
+
+<p>以上主要是搭建和使用github的基本操作，git还有很多实用的技巧。详情请移步<a href="http://git-scm.com/doc" target="_blank" rel="external">Git官方文档</a>。</p>
+<p>##参考文章：<br><a href="http://www.eoeandroid.com/thread-274556-1-1.html" target="_blank" rel="external">http://www.eoeandroid.com/thread-274556-1-1.html</a><br><a href="http://blog.csdn.net/hustpzb/article/details/8230454/" target="_blank" rel="external">http://blog.csdn.net/hustpzb/article/details/8230454/</a></p>
+<p>–EOF–</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Git/" rel="tag">#Git</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/TCP-IP-basics-1/" rel="next" title="TCP/IP基础知识(1)">
+                <i class="fa fa-chevron-left"></i> TCP/IP基础知识(1)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/algorithm-knowledge-list/" rel="prev" title="算法知识清单">
+                算法知识清单 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="GitHub-basic-usage/"
+           data-title="GitHub使用初探" data-url="http://yoursite.com/GitHub-basic-usage/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="Jack Jia" />
+          <p class="site-author-name" itemprop="name">Jack Jia</p>
+          <p class="site-description motion-element" itemprop="description">自由·至简·宁静</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/AjaxJackjia" target="_blank">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-注册账户以及创建仓库；"><span class="nav-number">1.</span> <span class="nav-text">1. 注册账户以及创建仓库；</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-安装GitBash"><span class="nav-number">2.</span> <span class="nav-text">2. 安装GitBash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-配置Git"><span class="nav-number">3.</span> <span class="nav-text">3. 配置Git</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-设置Git的user-name和email；"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 设置Git的user name和email；</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-进入到-，查看是否有-ssh目录，有则备份；"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 进入到~，查看是否有.ssh目录，有则备份；</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-在本地创建ssh-key，一路回车，最后得到两个文件：id-rsa和id-rsa-pub；"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 在本地创建ssh key，一路回车，最后得到两个文件：id_rsa和id_rsa.pub；</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-进入到github的account-settings，在SSH-Keys选项中，加入id-rsa-pub文件中的key。"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 进入到github的account settings，在SSH Keys选项中，加入id_rsa.pub文件中的key。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-进入到需要上传的repo（如果没有则用git-init来创建），然后添加远程地址："><span class="nav-number">3.5.</span> <span class="nav-text">3.5 进入到需要上传的repo（如果没有则用git init来创建），然后添加远程地址：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、提交、上传"><span class="nav-number">4.</span> <span class="nav-text">4、提交、上传</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、-gitignore文件"><span class="nav-number">5.</span> <span class="nav-text">5、.gitignore文件</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jack Jia</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ajaxjackjia"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+
+  
+    <script type="text/javascript" src="http://cdn.staticfile.org/mathjax/2.4.0/MathJax.js"></script>
+    <script type="text/javascript" src="http://cdn.staticfile.org/mathjax/2.4.0/config/TeX-AMS-MML_HTMLorMML.js"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("RpOyfsG0ugnDV6Fg5qbCXNOI-gzGzoHsz", "qa8bUqCM3LW1988c8GgO5XR4");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

@@ -1,0 +1,793 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="linux command," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="top命令作用动态观察系统进程状况，掌握系统资源现状；显示当前系统正在执行进程的相关信息，包括进程ID、内存占用率、CPU占用率等。">
+<meta name="keywords" content="linux command">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux指令之top">
+<meta property="og:url" content="http://yoursite.com/linux-command-top/index.html">
+<meta property="og:site_name" content="Jack Jia">
+<meta property="og:description" content="top命令作用动态观察系统进程状况，掌握系统资源现状；显示当前系统正在执行进程的相关信息，包括进程ID、内存占用率、CPU占用率等。">
+<meta property="og:image" content="http://7xk4nm.com1.z0.glb.clouddn.com/uploads/2016/7/linux-top-info.png">
+<meta property="og:image" content="http://7xk4nm.com1.z0.glb.clouddn.com/uploads/2016/7/linux-top-multiprocessors.png">
+<meta property="og:image" content="http://7xk4nm.com1.z0.glb.clouddn.com/uploads/2016/7/linux-top-highlight.png">
+<meta property="og:image" content="http://7xk4nm.com1.z0.glb.clouddn.com/uploads/2016/7/linux-top-sort.png">
+<meta property="og:image" content="http://7xk4nm.com1.z0.glb.clouddn.com/uploads/2016/7/linux-top-move-column.png">
+<meta property="og:updated_time" content="2017-04-08T07:37:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux指令之top">
+<meta name="twitter:description" content="top命令作用动态观察系统进程状况，掌握系统资源现状；显示当前系统正在执行进程的相关信息，包括进程ID、内存占用率、CPU占用率等。">
+<meta name="twitter:image" content="http://7xk4nm.com1.z0.glb.clouddn.com/uploads/2016/7/linux-top-info.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Linux指令之top | Jack Jia </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5e5d756ee86b47c3c2339a80b083f4a6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Jack Jia</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">慵懒的探索者</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books" rel="section">
+            
+              <i class="menu-item-icon fa fa-book fa-fw"></i> <br />
+            
+            读书
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Linux指令之top
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-10T13:54:24+08:00" content="2016-07-10">
+              2016-07-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/linux-command-top/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="linux-command-top/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/linux-command-top/" class="leancloud_visitors" data-flag-title="Linux指令之top">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="top"><a href="#top" class="headerlink" title="top"></a>top</h1><h2 id="命令作用"><a href="#命令作用" class="headerlink" title="命令作用"></a>命令作用</h2><p>动态观察系统进程状况，掌握系统资源现状；显示当前系统正在执行进程的相关信息，包括进程ID、内存占用率、CPU占用率等。</p>
+<a id="more"></a>
+<h2 id="命令参数"><a href="#命令参数" class="headerlink" title="命令参数"></a>命令参数</h2><p>-b 批处理<br>-c 显示完整命令<br>-I 忽略失效过程<br>-s 保密模式<br>-S 累积模式<br>-i&lt;时间&gt; 设置间隔时间<br>-u&lt;用户名&gt; 指定用户名<br>-p&lt;进程号&gt; 指定进程<br>-n&lt;次数&gt; 循环显示的次数</p>
+<h2 id="top显示进程信息："><a href="#top显示进程信息：" class="headerlink" title="top显示进程信息："></a>top显示进程信息：</h2><p><img src="http://7xk4nm.com1.z0.glb.clouddn.com/uploads/2016/7/linux-top-info.png" alt="top指令显示进程信息"></p>
+<p>统计信息区（前五行）：</p>
+<ul>
+<li>第一行：任务队列信息，具体如下：</li>
+</ul>
+<p>20:31:59 代表 当前时间；<br>up 355 days， 4:06 代表 系统已运行355天，4小时6分钟（期间没有重启）；<br>2 users 代表 当前有2个用户登录系统；<br>load average: 0.20，0.25，0.19 代表 1分钟、5分钟、15分钟的负载情况；<br>注：load average数据是每隔5秒钟检查一次活跃的进程数，然后按特定算法计算出的数值。如果这个数除以逻辑CPU的数量，结果高于5的时候就表明系统在超负荷运转了。</p>
+<ul>
+<li>第二行：Tasks 进程信息，具体如下：</li>
+</ul>
+<p>系统现在共有120个进程，其中处于运行中的有1个，119个在休眠（sleep），stoped状态的有0个，zombie状态（僵尸）的有0个。</p>
+<ul>
+<li>第三行：CPU状态信息，具体如下：</li>
+</ul>
+<p>1.5% us 代表 用户空间占用CPU的百分比；<br>0.1% sy 代表 内核空间占用CPU的百分比；<br>0.0% ni 代表 改变过优先级的进程占用CPU的百分比；<br>98.1% id 代表 空闲CPU百分比；<br>0.3% wa 代表 IO等待占用CPU的百分比；<br>0.0% hi 代表 硬中断（Hardware IRQ）占用CPU的百分比；<br>0.2% si 代表 软中断（Software Interrupts）占用CPU的百分比；<br>0.0% st 代表 虚拟机相关的占用CPU的百分比；</p>
+<ul>
+<li>第四行：内存状态，具体如下：</li>
+</ul>
+<p>3399732k total — 物理内存总量（3.4GB）<br>3032408k used — 使用中的内存总量（3GB）<br>367324k free — 空闲内存总量（0.4GB）<br>1378964k buffers — 缓存的内存量 （1.4GB）</p>
+<ul>
+<li>第五行：swap交换分区信息，具体如下：</li>
+</ul>
+<p>2104508k total — 交换区总量（2.1GB）<br>355412k used   — 使用的交换区总量（0.4GB）<br>1749096k free   — 空闲交换区总量（1.7GB）<br>504036k cached — 缓冲的交换区总量（0.5GB）</p>
+<p>所以有上述数据得到的可用内存为“第四行的free + 第四行的buffers + 第五行的cached”，约为2.3GB</p>
+<ul>
+<li>第七行：各进程（任务）的状态监控，列信息说明如下：</li>
+</ul>
+<p>PID — 进程id<br>USER — 进程所有者<br>PR — 进程优先级<br>NI — nice值。负值表示高优先级，正值表示低优先级<br>VIRT — 进程使用的虚拟内存总量，单位kb。VIRT=SWAP+RES<br>RES — 进程使用的、未被换出的物理内存大小，单位kb。RES=CODE+DATA<br>SHR — 共享内存大小，单位kb<br>S — 进程状态：D=不可中断的睡眠状态 R=运行 S=睡眠 T=跟踪/停止 Z=僵尸进程<br>%CPU — 上次更新到现在的CPU时间占用百分比<br>%MEM — 进程使用的物理内存百分比<br>TIME+ — 进程使用的CPU时间总计，单位1/100秒<br>COMMAND — 进程名称（命令名/命令行）</p>
+<h2 id="使用技巧"><a href="#使用技巧" class="headerlink" title="使用技巧"></a>使用技巧</h2><h3 id="多核CPU监控"><a href="#多核CPU监控" class="headerlink" title="多核CPU监控"></a>多核CPU监控</h3><p>在top基本视图中，按键盘数字“1”，可监控每个逻辑CPU的状况。<br>图显示有4个逻辑CPU，实际上是1个物理CPU。</p>
+<p><img src="http://7xk4nm.com1.z0.glb.clouddn.com/uploads/2016/7/linux-top-multiprocessors.png" alt="top指令显示多核信息"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//查看物理CPU的个数</div><div class="line">#cat /proc/cpuinfo |grep &quot;physical id&quot;|sort |uniq|wc -l</div><div class="line"></div><div class="line">//查看逻辑CPU的个数</div><div class="line">#cat /proc/cpuinfo |grep &quot;processor&quot;|wc -l</div><div class="line"></div><div class="line">//查看CPU是几核</div><div class="line">#cat /proc/cpuinfo |grep &quot;cores&quot;|uniq</div></pre></td></tr></table></figure>
+<h3 id="高亮显示当前运行进程"><a href="#高亮显示当前运行进程" class="headerlink" title="高亮显示当前运行进程"></a>高亮显示当前运行进程</h3><p>按键盘“b”（打开/关闭）,当前高亮行为状态为运行态的那个进程。</p>
+<p><img src="http://7xk4nm.com1.z0.glb.clouddn.com/uploads/2016/7/linux-top-highlight.png" alt="top指令高亮显示"></p>
+<h3 id="进程字段排序"><a href="#进程字段排序" class="headerlink" title="进程字段排序"></a>进程字段排序</h3><p>先按键盘“x”，打开排序列的高亮效果，<br>按CPU占用率排序：shift + p；<br>按内存占用率排序：shift + m；<br>按CPU占用时间排序：shift + t；<br>按PID排序：shift + n；</p>
+<p><img src="http://7xk4nm.com1.z0.glb.clouddn.com/uploads/2016/7/linux-top-sort.png" alt="top指令排序"></p>
+<h3 id="通过shift-gt-或shift-lt-可以向右或左改变排序列"><a href="#通过shift-gt-或shift-lt-可以向右或左改变排序列" class="headerlink" title="通过shift + &gt;或shift + &lt;可以向右或左改变排序列"></a>通过<code>shift + &gt;</code>或<code>shift + &lt;</code>可以向右或左改变排序列</h3><p>下图是由上图按一次<code>shift + &gt;</code>的效果图,视图现在已经按照TIME+来排序。</p>
+<p><img src="http://7xk4nm.com1.z0.glb.clouddn.com/uploads/2016/7/linux-top-move-column.png" alt="top指令排序"></p>
+<h2 id="top交互命令"><a href="#top交互命令" class="headerlink" title="top交互命令"></a>top交互命令</h2><p>在top 命令执行过程中可以使用的一些交互命令。<br>这些命令都是单字母的，如果在命令行中使用了s 选项， 其中一些命令可能会被屏蔽。</p>
+<p>h 显示帮助画面，给出一些简短的命令总结说明<br>k 终止一个进程。<br>i 忽略闲置和僵死进程。这是一个开关式命令。<br>q 退出程序<br>r 重新安排一个进程的优先级别<br>S 切换到累计模式<br>s 改变两次刷新之间的延迟时间（单位为s），如果有小数，就换算成m s。输入0值则系统将不断刷新，默认值是5 s<br>f或者F 从当前显示中添加或者删除项目<br>o或者O 改变显示项目的顺序<br>l 切换显示平均负载和启动时间信息<br>m 切换显示内存信息<br>t 切换显示进程和CPU状态信息<br>c 切换显示命令名称和完整命令行<br>M 根据驻留内存大小进行排序<br>P 根据CPU使用百分比大小进行排序<br>T 根据时间/累计时间进行排序<br>W 将当前设置写入~/.toprc文件中 </p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux-command/" rel="tag">#linux command</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/linux-command-pmap/" rel="next" title="linux指令之pmap">
+                <i class="fa fa-chevron-left"></i> linux指令之pmap
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/linux-command-list/" rel="prev" title="Linux 指令日常">
+                Linux 指令日常 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="linux-command-top/"
+           data-title="Linux指令之top" data-url="http://yoursite.com/linux-command-top/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="Jack Jia" />
+          <p class="site-author-name" itemprop="name">Jack Jia</p>
+          <p class="site-description motion-element" itemprop="description">自由·至简·宁静</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/AjaxJackjia" target="_blank">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#top"><span class="nav-number">1.</span> <span class="nav-text">top</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#命令作用"><span class="nav-number">1.1.</span> <span class="nav-text">命令作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令参数"><span class="nav-number">1.2.</span> <span class="nav-text">命令参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#top显示进程信息："><span class="nav-number">1.3.</span> <span class="nav-text">top显示进程信息：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用技巧"><span class="nav-number">1.4.</span> <span class="nav-text">使用技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多核CPU监控"><span class="nav-number">1.4.1.</span> <span class="nav-text">多核CPU监控</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高亮显示当前运行进程"><span class="nav-number">1.4.2.</span> <span class="nav-text">高亮显示当前运行进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程字段排序"><span class="nav-number">1.4.3.</span> <span class="nav-text">进程字段排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过shift-gt-或shift-lt-可以向右或左改变排序列"><span class="nav-number">1.4.4.</span> <span class="nav-text">通过shift + >或shift + <可以向右或左改变排序列</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#top交互命令"><span class="nav-number">1.5.</span> <span class="nav-text">top交互命令</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jack Jia</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ajaxjackjia"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+
+  
+    <script type="text/javascript" src="http://cdn.staticfile.org/mathjax/2.4.0/MathJax.js"></script>
+    <script type="text/javascript" src="http://cdn.staticfile.org/mathjax/2.4.0/config/TeX-AMS-MML_HTMLorMML.js"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("RpOyfsG0ugnDV6Fg5qbCXNOI-gzGzoHsz", "qa8bUqCM3LW1988c8GgO5XR4");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

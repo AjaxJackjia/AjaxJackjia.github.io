@@ -1,0 +1,878 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="TCP/IP,network,协议,网络," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="TCPIP栈体系结构 TCP/IP采用四层架构      网络接口层：也称链路层，是较高协议层与局域网接口的地方。 网际层：负责网间寻址、数据封装、路由选择、分片、错误处理和诊断。可在该层运行IP协议、ICMP协议和几个路由协议。 运输层：负责在网际设备之间运输数据。该层构成端到端的通信。在该层中不同的进程被分配具体的源和目的地址（端口号）。 应用层：用户的应用使用运行在该层的协议。   TCP/">
+<meta name="keywords" content="TCP/IP,network,协议,网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TCP/IP基础知识(1)">
+<meta property="og:url" content="http://yoursite.com/TCP-IP-basics-1/index.html">
+<meta property="og:site_name" content="Jack Jia">
+<meta property="og:description" content="TCPIP栈体系结构 TCP/IP采用四层架构      网络接口层：也称链路层，是较高协议层与局域网接口的地方。 网际层：负责网间寻址、数据封装、路由选择、分片、错误处理和诊断。可在该层运行IP协议、ICMP协议和几个路由协议。 运输层：负责在网际设备之间运输数据。该层构成端到端的通信。在该层中不同的进程被分配具体的源和目的地址（端口号）。 应用层：用户的应用使用运行在该层的协议。   TCP/">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_四层架构.png">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_协议族1.png">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_协议族2.png">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_协议族3.png">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_协议相关性.png">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_802模型.png">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_数据报格式.PNG">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_ip地址表示法.PNG">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_设备ip地址.PNG">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_ip地址结构.PNG">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_分类编址.PNG">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_分类编址列表.PNG">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_ip子网编址.PNG">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_子网编址结构1.PNG">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_子网编址结构2.PNG">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_VLSM.PNG">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_VLSM实例.PNG">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_路由表.PNG">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_icmp报文格式.png">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_icmp差错报文.png">
+<meta property="og:image" content="http://yoursite.com/uploads/2015/3/tcpip_icmp信息交换报文.png">
+<meta property="og:updated_time" content="2017-04-08T07:37:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TCP/IP基础知识(1)">
+<meta name="twitter:description" content="TCPIP栈体系结构 TCP/IP采用四层架构      网络接口层：也称链路层，是较高协议层与局域网接口的地方。 网际层：负责网间寻址、数据封装、路由选择、分片、错误处理和诊断。可在该层运行IP协议、ICMP协议和几个路由协议。 运输层：负责在网际设备之间运输数据。该层构成端到端的通信。在该层中不同的进程被分配具体的源和目的地址（端口号）。 应用层：用户的应用使用运行在该层的协议。   TCP/">
+<meta name="twitter:image" content="http://yoursite.com/uploads/2015/3/tcpip_四层架构.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> TCP/IP基础知识(1) | Jack Jia </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?5e5d756ee86b47c3c2339a80b083f4a6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Jack Jia</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">慵懒的探索者</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books" rel="section">
+            
+              <i class="menu-item-icon fa fa-book fa-fw"></i> <br />
+            
+            读书
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                TCP/IP基础知识(1)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-03-26T22:10:04+08:00" content="2015-03-26">
+              2015-03-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/网络/" itemprop="url" rel="index">
+                    <span itemprop="name">网络</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/TCP-IP-basics-1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="TCP-IP-basics-1/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/TCP-IP-basics-1/" class="leancloud_visitors" data-flag-title="TCP/IP基础知识(1)">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="TCPIP栈体系结构"><a href="#TCPIP栈体系结构" class="headerlink" title="TCPIP栈体系结构"></a>TCPIP栈体系结构</h1><hr>
+<h2 id="TCP-IP采用四层架构"><a href="#TCP-IP采用四层架构" class="headerlink" title="TCP/IP采用四层架构"></a>TCP/IP采用四层架构</h2><p><a href="/uploads/2015/3/tcpip_四层架构.png"><br>    <img src="/uploads/2015/3/tcpip_四层架构.png" alt="tcpip_四层架构" width="700"><br></a></p>
+<ul>
+<li><strong>网络接口层</strong>：也称链路层，是较高协议层与局域网接口的地方。</li>
+<li><strong>网际层</strong>：负责网间寻址、数据封装、路由选择、分片、错误处理和诊断。可在该层运行IP协议、ICMP协议和几个路由协议。</li>
+<li><strong>运输层</strong>：负责在网际设备之间运输数据。该层构成端到端的通信。在该层中不同的进程被分配具体的源和目的地址（端口号）。</li>
+<li><strong>应用层</strong>：用户的应用使用运行在该层的协议。</li>
+</ul>
+<hr>
+<h2 id="TCP-IP协议族"><a href="#TCP-IP协议族" class="headerlink" title="TCP/IP协议族"></a>TCP/IP协议族</h2><p><a href="/uploads/2015/3/tcpip_协议族1.png"><br>    <img src="/uploads/2015/3/tcpip_协议族1.png" alt="tcpip_协议族1" width="680"><br></a><br><a href="/uploads/2015/3/tcpip_协议族2.png"><br>    <img src="/uploads/2015/3/tcpip_协议族2.png" alt="tcpip_协议族2" width="680"><br></a><br><a href="/uploads/2015/3/tcpip_协议族3.png"><br>    <img src="/uploads/2015/3/tcpip_协议族3.png" alt="tcpip_协议族3" width="680"><br></a></p>
+<p>##TCP/IP协议相关性</p>
+<p><a href="/uploads/2015/3/tcpip_协议相关性.png"><br>    <img src="/uploads/2015/3/tcpip_协议相关性.png" alt="tcpip_协议相关性" width="680"><br></a></p>
+<hr>
+<h1 id="网络接口层"><a href="#网络接口层" class="headerlink" title="网络接口层"></a>网络接口层</h1><h2 id="IEEE-802模型"><a href="#IEEE-802模型" class="headerlink" title="IEEE 802模型"></a>IEEE 802模型</h2><p>IEEE802模型与ISO模型的两个低层相关：物理层和数据链路层。</p>
+<p>802模型将数据链路层分成3个子层：逻辑链路控制层（LLC802.2）、 桥接层（802.1）和介质访问控制层（MAC）</p>
+<p><a href="/uploads/2015/3/tcpip_802模型.png"><br>    <img src="/uploads/2015/3/tcpip_802模型.png" alt="tcpip_802模型" width="680"><br></a></p>
+<hr>
+<h1 id="网际层IP和ICMP"><a href="#网际层IP和ICMP" class="headerlink" title="网际层IP和ICMP"></a>网际层IP和ICMP</h1><h2 id="网际协议IPv4"><a href="#网际协议IPv4" class="headerlink" title="网际协议IPv4"></a>网际协议IPv4</h2><p>网际协议是TCP/IP的重要组成，它位于网际层，为运输层(UDP、TCP) 提供服务，并从网络接入层(LAN驱动程序、SLIP 、PPP)请求服务。</p>
+<p>##IPV4数据报格式</p>
+<p><a href="/uploads/2015/3/tcpip_数据报格式.PNG"><br>    <img src="/uploads/2015/3/tcpip_数据报格式.PNG" alt="tcpip_数据报格式" width="680"><br></a></p>
+<p>版本(4位)：表示IP的版本，对于IPv4，其值为0x04。<br>首部长度(4位) ：全部首部，包括选项和填充的长度，以字长32位为单位。如果没有首部选项，该字段的值为0x05(20字节，5个字)。<br>服务类型(1字节)：指示所希望的服务质量。<br>优先(位0~2) -该值越大，数据报相对其它数据报的优先级越高。<br>时延(位3) -若需要较低的时延，须将该位置1。<br>吞吐量(位4) -若需要较高的吞吐量，须将该位置1。<br>可靠性(位5) -若需要较高的可靠性，须将该位置1。<br><strong>总长度(2字节)</strong>：指示IP数据报的总长度(最大值65535字节)。<br>标识(2字节)：在分片中使用，同一报文的所有分片具有相同的标识号。因为不同报文的分片可能混杂在一起接收，所以该标识号能帮助将来自同一原始报文的分片组装到一起。<br>标志(3位)：在分片中使用。<br>不分片DF(位1) -指示该数据包信息字段不能分片。<br>还有分片MF(位2) -该位置1，指示后面还有分片。该位置0，说明该数据报是最后一个分片或数据报未分片。<br>分片偏移(13位)：指示该分片在原始报文中的位置。偏移以8字节为单位，所以需要将其值乘以8来得到正确位置。<br>生存时间(1字节)：用于防止数据报无限期的在路由之间流动。数据报每经过一个路由器该值减1。若为0，数据报被丢弃。<br>协议(1字节)：指示在净荷中承载的上层协议。<br>首部校验和(2字节)：对IP首部计算的16位校验和。当接收到数据报时，要重新计算校验和并与该字段比对。若两个结果不一样则数据报被丢弃。<br><strong>源地址(4字节)</strong>：创建数据报的设备的32位IP地址。<br><strong>目的地址(4字节)</strong>：数据报的预期接收设备的32位IP地址。<br>选项(可变长度)：0或多个选项。<br>填充(可变长度)：如果包含选项，则选项字段尺寸必须是32位的整数倍，否则必须使用填充字节。<br>数据(可变长度)：要发送的数据(或原始数据报被分片后的一个分片)。</p>
+<h2 id="IP编址"><a href="#IP编址" class="headerlink" title="IP编址"></a>IP编址</h2><p><a href="/uploads/2015/3/tcpip_ip地址表示法.PNG"><br>    <img src="/uploads/2015/3/tcpip_ip地址表示法.PNG" alt="tcpip_ip地址表示法" width="680"><br></a></p>
+<h3 id="设备的IP地址"><a href="#设备的IP地址" class="headerlink" title="设备的IP地址"></a>设备的IP地址</h3><p>每个设备都必须有一个唯一的IP地址。但是这并不意味着一个设备只能有一个IP地址。比如路由器。即每个网络接口有一个IP地址。<br>主机也可能不止一个IP地址，即多址主机。可能有更多对统一网络或不同网络的接口，如果运行合适的软件，可以起到路由器作用。</p>
+<p><a href="/uploads/2015/3/tcpip_设备ip地址.PNG"><br>    <img src="/uploads/2015/3/tcpip_设备ip地址.PNG" alt="tcpip_设备ip地址" width="680"><br></a></p>
+<h3 id="IP地址结构"><a href="#IP地址结构" class="headerlink" title="IP地址结构"></a>IP地址结构</h3><p>由于互联网由互相连接在一起的网络组成，而且每个网络都连接了若干主机或设备，所以将IP地址分成网络ID和主机ID两部分是很自然的。这种结构便于路由器工作。<br>32位IP地址中用多少位来表示网络ID和主机ID取决于所使用的IP编址机制。</p>
+<p><a href="/uploads/2015/3/tcpip_ip地址结构.PNG"><br>    <img src="/uploads/2015/3/tcpip_ip地址结构.PNG" alt="tcpip_ip地址结构" width="680"><br></a></p>
+<h3 id="IP分类编址"><a href="#IP分类编址" class="headerlink" title="IP分类编址"></a>IP分类编址</h3><p>根据网络的规模(主机数)将网络分成3个主要的类</p>
+<p><a href="/uploads/2015/3/tcpip_分类编址.PNG"><br>    <img src="/uploads/2015/3/tcpip_分类编址.PNG" alt="tcpip_分类编址" width="680"><br></a></p>
+<p>由IP地址的第一字节可判断出该IP属于的地址类。</p>
+<p><a href="/uploads/2015/3/tcpip_分类编址列表.PNG"><br>    <img src="/uploads/2015/3/tcpip_分类编址列表.PNG" alt="tcpip_分类编址列表" width="680"><br></a></p>
+<h3 id="保留IP地址"><a href="#保留IP地址" class="headerlink" title="保留IP地址"></a>保留IP地址</h3><p>在三个主类所定义的IP地址中，有一些IP地址范围是不能使用的。保留作为下列用途：</p>
+<ul>
+<li><strong> [私网]</strong>这些IP地址不是可用于寻路的地址，在公网上不存在，路由器 会忽略它们。<br>A类：10.0.0.0~10.255.255.255<br>B类：169.254.0.0~169.254.255.255, 172.16.0.0~172.16.255.255<br>C类：192.168.0.0~192.168.255.255    </li>
+<li><strong>[环回]</strong>这些IP地址作为环回测试用。实际上，当一个IP数据报被发送到环回地址时，该数据报不会被传到数据链路层并通过物理层发送出去，而是被环回到网际层的源地址。<br>这些地址是：127.0.0.0~127.255.255.255</li>
+<li><strong>[其它用途]</strong>保留作为其它不同用途。如网络试验。</li>
+</ul>
+<h3 id="分类编址机制的问题"><a href="#分类编址机制的问题" class="headerlink" title="分类编址机制的问题"></a>分类编址机制的问题</h3><p>地址空间利用率不高；不适合大型网络。</p>
+<h2 id="IP子网编址"><a href="#IP子网编址" class="headerlink" title="IP子网编址"></a>IP子网编址</h2><p>IP子网编址机制：为了适合大型网络，在IP地址的主机ID部分引入了一个新的机制。网络ID保持不变，主机ID被进一步分成几个子网，每个子网包含主机。</p>
+<p><a href="/uploads/2015/3/tcpip_ip子网编址.PNG"><br>    <img src="/uploads/2015/3/tcpip_ip子网编址.PNG" alt="tcpip_ip子网编址" width="680"><br></a></p>
+<h3 id="子网编址的结构"><a href="#子网编址的结构" class="headerlink" title="子网编址的结构"></a>子网编址的结构</h3><p>IP地址的主机ID被分成子网ID和主机ID。<br>子网ID和主机ID的位数取决于网络的组织。</p>
+<p><a href="/uploads/2015/3/tcpip_子网编址结构1.PNG"><br>    <img src="/uploads/2015/3/tcpip_子网编址结构1.PNG" alt="tcpip_子网编址结构1" width="680"><br></a></p>
+<h3 id="IP-掩码对"><a href="#IP-掩码对" class="headerlink" title="IP/掩码对"></a>IP/掩码对</h3><p>对于一个给定的IP地址，如何知道子网ID和主机ID有多少位呢？<br>为了知道子网ID和主机ID的分界线，必须辅以子网掩码。在子网掩码中，网络ID和子网ID的对应位全为1，主机ID的对应位全为0。</p>
+<p><a href="/uploads/2015/3/tcpip_子网编址结构2.PNG"><br>    <img src="/uploads/2015/3/tcpip_子网编址结构2.PNG" alt="tcpip_子网编址结构2" width="680"><br></a></p>
+<h3 id="变长子网掩码机制-VLSM"><a href="#变长子网掩码机制-VLSM" class="headerlink" title="变长子网掩码机制(VLSM)"></a>变长子网掩码机制(VLSM)</h3><p>子网编址的缺陷即是所有子网必须有相同的尺寸(最大主机数)。变长子网掩码是将网络地址空间拆分成几个不同尺寸的子网。</p>
+<p><a href="/uploads/2015/3/tcpip_VLSM.PNG"><br>    <img src="/uploads/2015/3/tcpip_VLSM.PNG" alt="tcpip_VLSM" width="680"><br></a></p>
+<p>VLSM实例如下所示：</p>
+<p><a href="/uploads/2015/3/tcpip_VLSM实例.PNG"><br>    <img src="/uploads/2015/3/tcpip_VLSM实例.PNG" alt="tcpip_VLSM实例" width="680"><br></a></p>
+<h3 id="无类别地址机制-CIDR"><a href="#无类别地址机制-CIDR" class="headerlink" title="无类别地址机制(CIDR)"></a>无类别地址机制(CIDR)</h3><p>分类编址机制不能适合不同规模网络的多样性，造成可用IP地址空间的匮乏。CIDR的思想是将子网技术应用于整个Internet。</p>
+<h2 id="IP交付和路由"><a href="#IP交付和路由" class="headerlink" title="IP交付和路由"></a>IP交付和路由</h2><ul>
+<li>数据报交付是IP层的主要任务。若两个主机位于同一个LAN中，则该报文由数据链路层在本地交付。称为直接交付。主机位于远程的不同网络中的交付情况称为间接交付。</li>
+<li>路由器是完成间接交付的设备。</li>
+<li>主机必须配置一个IP地址、一个子网掩码和一个默认网关。 </li>
+</ul>
+<p><a href="/uploads/2015/3/tcpip_路由表.PNG"><br>    <img src="/uploads/2015/3/tcpip_路由表.PNG" alt="tcpip_路由表" width="680"><br></a></p>
+<h2 id="控制报文协议ICMP"><a href="#控制报文协议ICMP" class="headerlink" title="控制报文协议ICMP"></a>控制报文协议ICMP</h2><p>由于IP是不可靠的，需要一种反馈机制。ICMP协议为IP层通信提供一个维护、诊断和测试框架。<br>ICMP不用于交付信息；IP数据报用于交付信息。 </p>
+<p><a class="cotent-img" href="/uploads/2015/3/tcpip_icmp报文格式.png"><br>    <img src="/uploads/2015/3/tcpip_icmp报文格式.png" alt="tcpip_icmp报文格式" width="680"><br></a></p>
+<p>ICMP通过将信息封装在IP分组中，并设置报头的协议字段为1来发送信息。ICMP报文可以分为：</p>
+<ul>
+<li>差错报文</li>
+<li>控制报文</li>
+<li>请求应答报文</li>
+</ul>
+<p><a class="cotent-img" href="/uploads/2015/3/tcpip_icmp差错报文.png"><br>    <img src="/uploads/2015/3/tcpip_icmp差错报文.png" alt="tcpip_icmp差错报文" width="680"><br></a></p>
+<p><a class="cotent-img" href="/uploads/2015/3/tcpip_icmp信息交换报文.png"><br>    <img src="/uploads/2015/3/tcpip_icmp信息交换报文.png" alt="tcpip_icmp信息交换报文" width="680"><br></a></p>
+<h3 id="差错报文"><a href="#差错报文" class="headerlink" title="差错报文"></a>差错报文</h3><p>ICMP差错报文最根本的功能是提供差错报告，中间的路由器或目的端在处理IP报文时，如果发现错误，就向源端主机发送ICMP差错控制报文。主要包括：</p>
+<ul>
+<li>目的无法到达(Destination Unreachable),用于报告多种原因造成的IP报文无法到达的错误。</li>
+<li>超时( Time Exceeded)。 当IP分组中的生存期TTL字段减到0或重装定时器（在收到分组的第一个段时设置）到期时发送超时分组。 </li>
+<li>参数问题(Parameter Problem)报文用于报告IP报文头的错误。</li>
+</ul>
+<h3 id="控制报文"><a href="#控制报文" class="headerlink" title="控制报文"></a>控制报文</h3><p>ICMP的控制报文主要用于网络层的拥塞控制和路径控制。包括源抑制和重定向报文。</p>
+<ul>
+<li>源抑制(Source Quench): 如果路由器从主机那里收到太多的分组，它可以发送一个信息要求降低分组的传输速度。用于拥塞控制的源抑制报文的格式和差错报告的格式一样，源抑制报文类型为4，码值只能为0。</li>
+<li>重定向(Redirect)报文: 在IP网络中，路由选择主要由网络中的路由器来承担。主机只是知道很少的寻径信息，它把非本网的信息往设置的缺省路由器上发送。在一个网络上有两台或多台路由器时，经过缺省路由器虽然可以保证把数据包发送出去，但不能保证对于所有的目的地总是最优的。ICMP中定义的重定向报文，是主机和路由器之间交换路由信息的途径。</li>
+</ul>
+<h3 id="信息交换报文"><a href="#信息交换报文" class="headerlink" title="信息交换报文"></a>信息交换报文</h3><p>其中请求应答报文主要用于网络诊断。一般成对发送，每一个请求报文对应一种应答报文。包括：</p>
+<ul>
+<li>回送请求与应答(Echo Request and Rely)：ICMP使用这个分组来确定某具体目的地能否到达。</li>
+<li>时戳请求与应答( Timestamp Request and Reply)：时戳分组使主机能估计它到另一个主机间一次来回所需的时间。</li>
+<li>地址掩码请求和应答(Address Mask Request and Reply)：主机可以向路由器发送一个地址掩码请求分组来获取它所在网络的网络掩码，路由器会作出应答。</li>
+</ul>
+<h2 id="地址解析协议ARP"><a href="#地址解析协议ARP" class="headerlink" title="地址解析协议ARP"></a>地址解析协议ARP</h2><p>ARP机制实现设备A通过提供设备B的IP地址来获取其MAC地址的方法。</p>
+<h3 id="ARP解析缓存"><a href="#ARP解析缓存" class="headerlink" title="ARP解析缓存"></a>ARP解析缓存</h3><ul>
+<li>为了避免每发送一个帧都进行ARP过程，使用一种高速缓存技术:运行在每个设备中的软件都维护一个IP地址和硬件地址之间的对应关系表。这样，只在第一次需要使用ARP过程来解析IP地址，然后这一对应关系便被加入到表中。之后，每当需要该设备的硬件地址时，都能在表中查到。</li>
+<li>由于ARP请求报文是广播的，则所有站都应捕获到发送设备的IP和MAC地址，并将它们加入到其解析表中。 </li>
+<li>解析表中的表项应在一段时间后过期失效。</li>
+</ul>
+<h2 id="逆向地址解析协议RARP"><a href="#逆向地址解析协议RARP" class="headerlink" title="逆向地址解析协议RARP"></a>逆向地址解析协议RARP</h2><ul>
+<li>由设备的硬件地址，查询它所对应的IP地址。 </li>
+<li>该协议使用与ARP同样的报文格式，但不同的操作码。</li>
+<li>嵌入式无盘系统中的应用，设备可以使用RARP提供硬件地址并请求IP地址。 </li>
+</ul>
+<h2 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h2><ul>
+<li>网际层负责不同LAN技术的相互连接，建立一个“虚网”，以允许所有设备能够像在同一个网络中一样互相通信。</li>
+<li>IP层的主要功能是封装、分片/重组、编址、交付和选路。</li>
+<li>封装是将上一层数据装入一个带有其它控制字段的数据报的过程，其目的是将该分组传递到协议栈的下一层以便发送。 </li>
+<li>IP分片过程是将IP数据报分成几个尺寸较小的数据包，以解决一些网络在处理大数据报时可能出现的帧尺寸限制问题。在接收端，重组过程必须将分片数据报重新构成原始数据报。</li>
+<li>互连网设备都必须有一个唯一的IP地址。每个IP地址有一个网络ID部分和一个主机ID部分。需要提供合适的编址机制，以便于网络和主机的识别。 </li>
+<li>分类编址将整个地址空间分成几类，以适合不同规模的网络。该机制使用效率很低，也不能很好地适合大型网络。子网技术的提出允许网络在内部分成几个子网，该机制的不足是所有子网的尺寸必须相同。变长子网掩码技术克服了这一限制，但仍然不能有效的利用地址空间。无类别编址机制将子网技术应用于整个Internet，是目前使用的技术。 </li>
+<li>IP层负责报文交付。直接交付由数据链路层在本地网络完成，间接交付由路由器完成。路由器根据路由表中信息决定传送报文的最佳路径。 </li>
+<li>控制报文协议ICMP的作用像是IP的“助理”，为互联网的工作状态提供反馈。该协议主要用于维护、诊断和测试。 </li>
+<li>地址解析协议ARP用于将IP地址映射为物理地址。逆向地址解析协议RARP用于将硬件地址映射为IP地址。 </li>
+</ul>
+<p>–EOF–</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/TCP-IP/" rel="tag">#TCP/IP</a>
+          
+            <a href="/tags/network/" rel="tag">#network</a>
+          
+            <a href="/tags/协议/" rel="tag">#协议</a>
+          
+            <a href="/tags/网络/" rel="tag">#网络</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/TCP-IP-basics-2/" rel="next" title="TCP/IP基础知识(2)">
+                <i class="fa fa-chevron-left"></i> TCP/IP基础知识(2)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/GitHub-basic-usage/" rel="prev" title="GitHub使用初探">
+                GitHub使用初探 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="TCP-IP-basics-1/"
+           data-title="TCP/IP基础知识(1)" data-url="http://yoursite.com/TCP-IP-basics-1/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="Jack Jia" />
+          <p class="site-author-name" itemprop="name">Jack Jia</p>
+          <p class="site-description motion-element" itemprop="description">自由·至简·宁静</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/AjaxJackjia" target="_blank">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TCPIP栈体系结构"><span class="nav-number">1.</span> <span class="nav-text">TCPIP栈体系结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP-IP采用四层架构"><span class="nav-number">1.1.</span> <span class="nav-text">TCP/IP采用四层架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP-IP协议族"><span class="nav-number">1.2.</span> <span class="nav-text">TCP/IP协议族</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网络接口层"><span class="nav-number">2.</span> <span class="nav-text">网络接口层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IEEE-802模型"><span class="nav-number">2.1.</span> <span class="nav-text">IEEE 802模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网际层IP和ICMP"><span class="nav-number">3.</span> <span class="nav-text">网际层IP和ICMP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#网际协议IPv4"><span class="nav-number">3.1.</span> <span class="nav-text">网际协议IPv4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IP编址"><span class="nav-number">3.2.</span> <span class="nav-text">IP编址</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设备的IP地址"><span class="nav-number">3.2.1.</span> <span class="nav-text">设备的IP地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IP地址结构"><span class="nav-number">3.2.2.</span> <span class="nav-text">IP地址结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IP分类编址"><span class="nav-number">3.2.3.</span> <span class="nav-text">IP分类编址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#保留IP地址"><span class="nav-number">3.2.4.</span> <span class="nav-text">保留IP地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分类编址机制的问题"><span class="nav-number">3.2.5.</span> <span class="nav-text">分类编址机制的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IP子网编址"><span class="nav-number">3.3.</span> <span class="nav-text">IP子网编址</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#子网编址的结构"><span class="nav-number">3.3.1.</span> <span class="nav-text">子网编址的结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IP-掩码对"><span class="nav-number">3.3.2.</span> <span class="nav-text">IP/掩码对</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变长子网掩码机制-VLSM"><span class="nav-number">3.3.3.</span> <span class="nav-text">变长子网掩码机制(VLSM)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无类别地址机制-CIDR"><span class="nav-number">3.3.4.</span> <span class="nav-text">无类别地址机制(CIDR)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IP交付和路由"><span class="nav-number">3.4.</span> <span class="nav-text">IP交付和路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#控制报文协议ICMP"><span class="nav-number">3.5.</span> <span class="nav-text">控制报文协议ICMP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#差错报文"><span class="nav-number">3.5.1.</span> <span class="nav-text">差错报文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#控制报文"><span class="nav-number">3.5.2.</span> <span class="nav-text">控制报文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信息交换报文"><span class="nav-number">3.5.3.</span> <span class="nav-text">信息交换报文</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#地址解析协议ARP"><span class="nav-number">3.6.</span> <span class="nav-text">地址解析协议ARP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ARP解析缓存"><span class="nav-number">3.6.1.</span> <span class="nav-text">ARP解析缓存</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#逆向地址解析协议RARP"><span class="nav-number">3.7.</span> <span class="nav-text">逆向地址解析协议RARP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结："><span class="nav-number">3.8.</span> <span class="nav-text">小结：</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jack Jia</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ajaxjackjia"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+
+  
+    <script type="text/javascript" src="http://cdn.staticfile.org/mathjax/2.4.0/MathJax.js"></script>
+    <script type="text/javascript" src="http://cdn.staticfile.org/mathjax/2.4.0/config/TeX-AMS-MML_HTMLorMML.js"></script>
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("RpOyfsG0ugnDV6Fg5qbCXNOI-gzGzoHsz", "qa8bUqCM3LW1988c8GgO5XR4");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
