@@ -30,6 +30,7 @@ menu:
   categories: /categories
   tags: /tags
   books: /books
+  xmind: /xmind
   about: /about
   #commonweal: /404.html
 
@@ -45,6 +46,7 @@ menu_icons:
   home: home
   about: user
   books: book
+  xmind: heartbeat
   categories: th
   tags: tags
   archives: archive
@@ -180,7 +182,7 @@ mathjax: true
 baidu_analytics: 5e5d756ee86b47c3c2339a80b083f4a6 
 
 # Duoshuo ShortName
-duoshuo_shortname: ajaxjackjia
+# duoshuo_shortname: ajaxjackjia
 
 # Disqus
 #disqus_shortname:
@@ -214,7 +216,7 @@ duoshuo_shortname: ajaxjackjia
 # user_id must NOT be null when admin_enable is true!
 # you can visit http://dev.duoshuo.com get duoshuo user id.
 duoshuo_info:
-  ua_enable: true
+  ua_enable: false
   admin_enable: false
   user_id: 0
   #admin_nickname: Author
