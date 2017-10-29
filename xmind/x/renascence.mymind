@@ -1,0 +1,310 @@
+{
+	"root": {
+		"id": "lcuikaca",
+		"text": "技能树",
+		"color": "#e33",
+		"layout": "map",
+		"children": [
+			{
+				"id": "zkrlapqa",
+				"text": "工作相关",
+				"side": "right",
+				"children": [
+					{
+						"id": "zacnjukq",
+						"text": "素质训练",
+						"color": "#000",
+						"shape": "box",
+						"children": [
+							{
+								"id": "zcyezihm",
+								"text": "思维训练",
+								"shape": "box",
+								"children": [
+									{
+										"id": "vmfnakxj",
+										"text": "金字塔思维"
+									}
+								]
+							},
+							{
+								"id": "yxbhhlej",
+								"text": "演讲",
+								"shape": "box"
+							},
+							{
+								"id": "ftogszbq",
+								"text": "效率",
+								"shape": "box"
+							}
+						]
+					},
+					{
+						"id": "tgewzojr",
+						"text": "<b>专业知识</b>",
+						"color": "#000",
+						"shape": "box",
+						"children": [
+							{
+								"id": "wrlxkjha",
+								"text": "计算机相关",
+								"color": "#000",
+								"shape": "box",
+								"children": [
+									{
+										"id": "dgabefru",
+										"text": "软件建模",
+										"shape": "box",
+										"children": [
+											{
+												"id": "oewuupry",
+												"text": "需求分析"
+											},
+											{
+												"id": "ykideioi",
+												"text": "UML建模"
+											},
+											{
+												"id": "ykrnibru",
+												"text": "设计模式"
+											}
+										]
+									},
+									{
+										"id": "yleywqib",
+										"text": "后台开发",
+										"shape": "box",
+										"children": [
+											{
+												"id": "qccmyyib",
+												"text": "分布式"
+											},
+											{
+												"id": "ybedoohh",
+												"text": "数据库"
+											},
+											{
+												"id": "lovptaza",
+												"text": "网络"
+											},
+											{
+												"id": "qqyzdgcl",
+												"text": "操作系统"
+											}
+										]
+									},
+									{
+										"id": "hzxxufle",
+										"text": "前端开发",
+										"shape": "box",
+										"children": [
+											{
+												"id": "kcwfobaw",
+												"text": "前端框架"
+											},
+											{
+												"id": "lzkwwgxh",
+												"text": "浏览器相关"
+											}
+										]
+									},
+									{
+										"id": "exjouusm",
+										"text": "机器学习",
+										"shape": "box",
+										"children": [
+											{
+												"id": "jyursqvc",
+												"text": "理论基础知识",
+												"children": [
+													{
+														"id": "qqvivudv",
+														"text": "概率论&amp;数理统计"
+													},
+													{
+														"id": "otjnlkmi",
+														"text": "线性代数"
+													},
+													{
+														"id": "qrlkjmwe",
+														"text": "矩阵论"
+													}
+												]
+											},
+											{
+												"id": "vkgqxnni",
+												"text": "搜索相关"
+											},
+											{
+												"id": "pbctkytm",
+												"text": "广告相关"
+											},
+											{
+												"id": "dzfeujsp",
+												"text": "推荐系统"
+											}
+										]
+									},
+									{
+										"id": "frvncdof",
+										"text": "质量保证",
+										"shape": "box",
+										"children": [
+											{
+												"id": "zlxpjsnl",
+												"text": "单元测试"
+											},
+											{
+												"id": "fsltfuhl",
+												"text": "自动化测试"
+											}
+										]
+									},
+									{
+										"id": "ziaabxrw",
+										"text": "运维运营",
+										"shape": "box",
+										"children": [
+											{
+												"id": "hklbsxms",
+												"text": "DevOps"
+											},
+											{
+												"id": "rbwfyquk",
+												"text": "Docker"
+											}
+										]
+									},
+									{
+										"id": "naxtyjbl",
+										"text": "编程语言",
+										"shape": "box",
+										"children": [
+											{
+												"id": "ylgjpagf",
+												"text": "C++"
+											},
+											{
+												"id": "rkcdxcsd",
+												"text": "python"
+											},
+											{
+												"id": "gkltksov",
+												"text": "javascript"
+											}
+										]
+									}
+								]
+							},
+							{
+								"id": "nqxqpvqx",
+								"text": "经济学相关",
+								"shape": "box"
+							}
+						]
+					}
+				]
+			},
+			{
+				"id": "ylfhryzw",
+				"text": "兴趣爱好",
+				"side": "right",
+				"color": "#e33",
+				"children": [
+					{
+						"id": "xokfkplz",
+						"text": "跑步",
+						"shape": "box",
+						"children": [
+							{
+								"id": "uydrvrge",
+								"text": "马拉松",
+								"shape": "box"
+							}
+						]
+					},
+					{
+						"id": "bysibbqb",
+						"text": "骑车",
+						"shape": "box"
+					},
+					{
+						"id": "ifjrwznh",
+						"text": "阅读",
+						"shape": "box",
+						"children": [
+							{
+								"id": "wtyopyui",
+								"text": "<a href=\"http://jackjia.cc/books\">http://jackjia.cc/books</a>",
+								"shape": "box"
+							}
+						]
+					},
+					{
+						"id": "kamwulpl",
+						"text": "摄影",
+						"shape": "box",
+						"children": [
+							{
+								"id": "ovesiuwl",
+								"text": "拍摄技巧"
+							},
+							{
+								"id": "xjnvhifg",
+								"text": "Photoshop"
+							}
+						]
+					},
+					{
+						"id": "ovfpdiww",
+						"text": "旅行",
+						"shape": "box"
+					}
+				]
+			},
+			{
+				"id": "uluqocoi",
+				"text": "生活技能",
+				"side": "right",
+				"color": "#e33",
+				"children": [
+					{
+						"id": "xzdmaddc",
+						"text": "烹饪",
+						"shape": "box",
+						"children": [
+							{
+								"id": "lrwjuaxi",
+								"text": "家常菜",
+								"shape": "box"
+							}
+						]
+					}
+				]
+			},
+			{
+				"id": "ovqhnaji",
+				"text": "投资理财",
+				"side": "right",
+				"color": "#e33",
+				"children": [
+					{
+						"id": "mwvqfpzh",
+						"text": "股票",
+						"shape": "box"
+					},
+					{
+						"id": "stbnzglk",
+						"text": "基金",
+						"shape": "box"
+					},
+					{
+						"id": "zkuouqah",
+						"text": "P2P",
+						"shape": "box"
+					}
+				]
+			}
+		]
+	}
+}

@@ -1,0 +1,40 @@
+{
+	"root": {
+		"id": "qtogykgy",
+		"text": "first edition",
+		"color": "#e33",
+		"layout": "map",
+		"children": [
+			{
+				"id": "skspbsnz",
+				"text": "test",
+				"side": "right",
+				"status": "yes",
+				"layout": "graph-bottom",
+				"shape": "box",
+				"children": [
+					{
+						"id": "wpnlqmlq",
+						"text": "<a href=\"http://jackjia.cc\">http://jackjia.cc</a>",
+						"shape": "ellipse"
+					},
+					{
+						"id": "aaektrta",
+						"text": "<a href=\"http://www.baidu.com\">http://www.baidu.com</a>",
+						"shape": "ellipse"
+					}
+				]
+			},
+			{
+				"id": "vonngwre",
+				"text": "test",
+				"side": "right"
+			},
+			{
+				"id": "jqscrycr",
+				"text": "ce-test",
+				"side": "left"
+			}
+		]
+	}
+}
